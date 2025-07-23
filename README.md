@@ -1,14 +1,12 @@
 # MicroK8s
-<pre>
 ```bash
 sudo snap install microk8s --classic --channel=1.33/stable
 echo "alias k='microk8s kubectl'" >> ~/.bashrc
 source ~/.bashrc
 ```
-</pre>
 
 # Operator
-<pre>
+```bash
 git clone https://github.com/cbarbieru/operator.git
 git checkout microk8s_patch
 
@@ -16,16 +14,15 @@ cd ~/operator/config/release/
 k apply -k .
 
 k label node rosablanche-1 node.kubernetes.io/worker="" --overwrite
-k get node rosablanche-1 --show-labels
 
 cd ~/operator/config/samples/ccruntime/default
 k apply -k .
-</pre>
+```
 
 ## For operator pre-install errors
-<pre>
-```bash sudo vim /var/snap/microk8s/current/args/config.toml.d/nydus-snapshotter.toml```
-</pre>
+```bash 
+sudo vim /var/snap/microk8s/current/args/config.toml.d/nydus-snapshotter.toml
+```
 
 <pre>
 [proxy_plugins]
@@ -34,20 +31,22 @@ k apply -k .
 	address = "/run/containerd-nydus/containerd-nydus-grpc.sock"
 </pre>
 
-<pre>
-```bash sudo systemctl start nydus-snapshotter.service```
 
-```bash sudo vim /var/snap/microk8s/current/args/containerd-template.toml```
-</pre>
+```bash
+sudo systemctl start nydus-snapshotter.service```
+
+sudo vim /var/snap/microk8s/current/args/containerd-template.toml
+```
+
 
 <pre>
 imports = ["/var/snap/microk8s/current/args/config.toml.d/*.toml"]
 </pre>
 
 ## Configure custom QEMU
-<pre>
-```bash sudo vim /opt/kata/share/defaults/kata-containers/configuration-qemu-tdx.toml```
-</pre>
+```bash
+sudo vim /opt/kata/share/defaults/kata-containers/configuration-qemu-tdx.toml
+```
 
 <pre>
 [hypervisor.qemu]
@@ -61,17 +60,15 @@ time="2025-07-23T12:24:05.013714495Z" level=error msg="qemu-system-x86_64-tdx-ex
 
 Restart containerd
 
-<pre>
-```bash sudo systemctl restart snap.microk8s.daemon-containerd.service```
-</pre>
+```bash 
+sudo systemctl restart snap.microk8s.daemon-containerd.service
+```
 
 # K8 Deployment
-<pre>
-```bin
+```bash
 git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
 cd ~/builder-playground-opstack-k8s
 mkdir -p /mnt/sceal/storage
 sudo cp -a storage/. /mnt/sceal/storage/
 k apply -f ./resources/
 ```
-</pre>
