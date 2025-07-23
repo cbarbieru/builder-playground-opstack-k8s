@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
     kompose.version: 1.36.0 (HEAD)
     playground: "true"
     playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
@@ -24,7 +24,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
         kompose.version: 1.36.0 (HEAD)
         playground: "true"
         playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
@@ -86,22 +86,14 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /data/genesis.json
-              name: el-cm1
-              subPath: genesis.json
+              name: el-hostpath1
             - mountPath: /data/jwtsecret
-              name: el-cm2
-              subPath: jwtsecret
+              name: el-hostpath2
       restartPolicy: Always
       volumes:
-        - configMap:
-            items:
-              - key: genesis.json
-                path: genesis.json
-            name: el-cm1
-          name: el-cm1
-        - configMap:
-            items:
-              - key: jwtsecret
-                path: jwtsecret
-            name: el-cm2
-          name: el-cm2
+        - hostPath:
+            path: /mnt/sceal/storage/genesis.json
+          name: el-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: el-hostpath2

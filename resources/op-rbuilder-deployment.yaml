@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
     kompose.version: 1.36.0 (HEAD)
     playground: "true"
     playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
@@ -24,7 +24,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
         kompose.version: 1.36.0 (HEAD)
         playground: "true"
         playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
@@ -78,22 +78,14 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /data/jwtsecret
-              name: op-rbuilder-cm1
-              subPath: jwtsecret
+              name: op-rbuilder-hostpath1
             - mountPath: /data/l2-genesis.json
-              name: op-rbuilder-cm2
-              subPath: l2-genesis.json
+              name: op-rbuilder-hostpath2
       restartPolicy: Always
       volumes:
-        - configMap:
-            items:
-              - key: jwtsecret
-                path: jwtsecret
-            name: op-rbuilder-cm1
-          name: op-rbuilder-cm1
-        - configMap:
-            items:
-              - key: l2-genesis.json
-                path: l2-genesis.json
-            name: op-rbuilder-cm2
-          name: op-rbuilder-cm2
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: op-rbuilder-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/l2-genesis.json
+          name: op-rbuilder-hostpath2

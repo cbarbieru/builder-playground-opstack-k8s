@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
     kompose.version: 1.36.0 (HEAD)
     playground: "true"
     playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
         kompose.version: 1.36.0 (HEAD)
         playground: "true"
         playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
@@ -48,9 +48,9 @@ spec:
           name: validator
           volumeMounts:
             - mountPath: /data/testnet-dir
-              name: validator-cm2
+              name: validator-hostpath2
       restartPolicy: Always
       volumes:
-        - configMap:
-            name: validator-cm2
-          name: validator-cm2
+        - hostPath:
+            path: /mnt/sceal/storage/testnet
+          name: validator-hostpath2
