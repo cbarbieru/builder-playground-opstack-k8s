@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.version: 1.36.0 (HEAD)
+    playground: "true"
+    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+    port.http: "8549"
+    port.metrics: "7300"
+    port.p2p: "9003"
+    service: op-node
+  labels:
+    io.kompose.service: op-node
+  name: op-node
+spec:
+  ports:
+    - name: "8549"
+      port: 8549
+      targetPort: 8549
+    - name: "9003"
+      port: 9003
+      targetPort: 9003
+    - name: "9004"
+      port: 9004
+      protocol: UDP
+      targetPort: 9003
+    - name: "7300"
+      port: 7300
+      targetPort: 7300
+  selector:
+    io.kompose.service: op-node

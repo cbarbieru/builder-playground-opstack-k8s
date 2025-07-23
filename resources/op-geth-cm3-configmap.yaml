@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  enode-key-1.txt: "0000000000000000000000000000000000000000000000000000000000000001"
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: op-geth
+  name: op-geth-cm3

@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  jwtsecret: 04592280e1778419b7aa954d43871cb2cfb2ebda754fb735e8adeb293a88f9bf
+kind: ConfigMap
+metadata:
+  annotations:
+    use-subpath: "true"
+  labels:
+    io.kompose.service: op-rbuilder
+  name: op-rbuilder-cm1

@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.version: 1.36.0 (HEAD)
+    playground: "true"
+    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    service: el
+  labels:
+    io.kompose.service: el
+  name: el
+spec:
+  ports:
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+  selector:
+    io.kompose.service: el

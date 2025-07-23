@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.version: 1.36.0 (HEAD)
+    playground: "true"
+    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+    service: validator
+  labels:
+    io.kompose.service: validator
+  name: validator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: validator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+        kompose.version: 1.36.0 (HEAD)
+        playground: "true"
+        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+        service: validator
+      labels:
+        io.kompose.service: validator
+    spec:
+      containers:
+        - args:
+            - vc
+            - --datadir
+            - /data/validator
+            - --testnet-dir
+            - /data/testnet-dir
+            - --init-slashing-protection
+            - --beacon-nodes
+            - http://beacon:3500
+            - --suggested-fee-recipient
+            - 0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990
+            - --builder-proposals
+            - --prefer-builder-proposals
+          command:
+            - lighthouse
+          image: sigp/lighthouse:v7.0.0-beta.0
+          name: validator
+          volumeMounts:
+            - mountPath: /data/testnet-dir
+              name: validator-cm2
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: validator-cm2
+          name: validator-cm2

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.version: 1.36.0 (HEAD)
+    playground: "true"
+    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+    port.authrpc: "8551"
+    service: rollup-boost
+  labels:
+    io.kompose.service: rollup-boost
+  name: rollup-boost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rollup-boost
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+        kompose.version: 1.36.0 (HEAD)
+        playground: "true"
+        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+        port.authrpc: "8551"
+        service: rollup-boost
+      labels:
+        io.kompose.service: rollup-boost
+    spec:
+      containers:
+        - args:
+            - --rpc-host
+            - 0.0.0.0
+            - --rpc-port
+            - "8551"
+            - --l2-jwt-path
+            - /data/jwtsecret
+            - --l2-url
+            - http://op-geth:8551
+            - --builder-jwt-path
+            - /data/jwtsecret
+            - --builder-url
+            - http://op-rbuilder:8551
+          image: docker.io/flashbots/rollup-boost:0.7.0
+          name: rollup-boost
+          ports:
+            - containerPort: 8551
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/jwtsecret
+              name: rollup-boost-cm1
+              subPath: jwtsecret
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: jwtsecret
+                path: jwtsecret
+            name: rollup-boost-cm1
+          name: rollup-boost-cm1

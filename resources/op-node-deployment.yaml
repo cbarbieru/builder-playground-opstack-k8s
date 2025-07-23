@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+    kompose.version: 1.36.0 (HEAD)
+    playground: "true"
+    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+    port.http: "8549"
+    port.metrics: "7300"
+    port.p2p: "9003"
+    service: op-node
+  labels:
+    io.kompose.service: op-node
+  name: op-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: op-node
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f /Users/claudiu/.playground/devnet/docker-compose.yaml convert
+        kompose.version: 1.36.0 (HEAD)
+        playground: "true"
+        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
+        port.http: "8549"
+        port.metrics: "7300"
+        port.p2p: "9003"
+        service: op-node
+      labels:
+        io.kompose.service: op-node
+    spec:
+      containers:
+        - args:
+            - --l1
+            - http://el:8545
+            - --l1.beacon
+            - http://beacon:3500
+            - --l1.epoch-poll-interval
+            - 12s
+            - --l1.http-poll-interval
+            - 6s
+            - --l2
+            - http://rollup-boost:8551
+            - --l2.jwt-secret
+            - /data/jwtsecret
+            - --sequencer.enabled
+            - --sequencer.l1-confs
+            - "0"
+            - --verifier.l1-confs
+            - "0"
+            - --p2p.sequencer.key
+            - 8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba
+            - --rollup.config
+            - /data/rollup.json
+            - --rpc.addr
+            - 0.0.0.0
+            - --rpc.port
+            - "8549"
+            - --p2p.listen.ip
+            - 0.0.0.0
+            - --p2p.listen.tcp
+            - "9003"
+            - --p2p.listen.udp
+            - "9003"
+            - --p2p.scoring.peers
+            - light
+            - --p2p.ban.peers
+            - "true"
+            - --metrics.enabled
+            - --metrics.addr
+            - 0.0.0.0
+            - --metrics.port
+            - "7300"
+            - --pprof.enabled
+            - --rpc.enable-admin
+            - --safedb.path
+            - /data_db
+          command:
+            - op-node
+          env:
+            - name: A
+              value: B
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.13.0-rc.1
+          name: op-node
+          ports:
+            - containerPort: 8549
+              protocol: TCP
+            - containerPort: 9003
+              protocol: TCP
+            - containerPort: 9003
+              protocol: UDP
+            - containerPort: 7300
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data/jwtsecret
+              name: op-node-cm1
+              subPath: jwtsecret
+            - mountPath: /data/rollup.json
+              name: op-node-cm2
+              subPath: rollup.json
+            - mountPath: /data_db
+              name: op-node-claim3
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            items:
+              - key: jwtsecret
+                path: jwtsecret
+            name: op-node-cm1
+          name: op-node-cm1
+        - configMap:
+            items:
+              - key: rollup.json
+                path: rollup.json
+            name: op-node-cm2
+          name: op-node-cm2
+        - name: op-node-claim3
+          persistentVolumeClaim:
+            claimName: op-node-claim3
