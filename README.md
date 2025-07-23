@@ -65,3 +65,13 @@ Restart containerd
 ```bash sudo systemctl restart snap.microk8s.daemon-containerd.service```
 </pre>
 
+# K8 Deployment
+<pre>
+```bin
+git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
+cd ~/builder-playground-opstack-k8s
+mkdir -p /mnt/sceal/storage
+sudo cp -a storage/. /mnt/sceal/storage/
+k apply -f ./resources/
+```
+</pre>
