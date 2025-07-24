@@ -13,8 +13,8 @@ metadata:
   name: rollup-boost
 spec:
   ports:
-    - name: "8554"
-      port: 8554
+    - name: "8551"
+      port: 8551
       targetPort: 8551
   selector:
     io.kompose.service: rollup-boost

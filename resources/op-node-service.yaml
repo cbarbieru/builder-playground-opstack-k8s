@@ -21,8 +21,8 @@ spec:
     - name: "9003"
       port: 9003
       targetPort: 9003
-    - name: "9004"
-      port: 9004
+    - name: "9003"
+      port: 9003
       protocol: UDP
       targetPort: 9003
     - name: "7300"

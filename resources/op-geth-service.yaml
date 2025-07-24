@@ -17,17 +17,17 @@ metadata:
   name: op-geth
 spec:
   ports:
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
     - name: "8546"
       port: 8546
-      targetPort: 8545
-    - name: "8547"
-      port: 8547
       targetPort: 8546
-    - name: "8552"
-      port: 8552
+    - name: "8551"
+      port: 8551
       targetPort: 8551
-    - name: "30304"
-      port: 30304
+    - name: "30303"
+      port: 30303
       targetPort: 30303
     - name: "6061"
       port: 6061

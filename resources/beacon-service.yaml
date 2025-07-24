@@ -19,8 +19,8 @@ spec:
       port: 9000
       protocol: UDP
       targetPort: 9000
-    - name: "9001"
-      port: 9001
+    - name: "9000"
+      port: 9000
       targetPort: 9000
     - name: "9100"
       port: 9100

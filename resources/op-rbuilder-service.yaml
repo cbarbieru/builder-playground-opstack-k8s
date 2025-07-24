@@ -16,17 +16,17 @@ metadata:
   name: op-rbuilder
 spec:
   ports:
-    - name: "8553"
-      port: 8553
+    - name: "8551"
+      port: 8551
       targetPort: 8551
-    - name: "8548"
-      port: 8548
+    - name: "8545"
+      port: 8545
       targetPort: 8545
-    - name: "9091"
-      port: 9091
+    - name: "9090"
+      port: 9090
       targetPort: 9090
-    - name: "30305"
-      port: 30305
+    - name: "30303"
+      port: 30303
       targetPort: 30303
   selector:
     io.kompose.service: op-rbuilder
