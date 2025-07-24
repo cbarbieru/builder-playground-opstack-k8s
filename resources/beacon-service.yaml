@@ -15,12 +15,13 @@ metadata:
   name: beacon
 spec:
   ports:
-    - name: "9000"
+    - name: "udp-9000"
       port: 9000
       protocol: UDP
       targetPort: 9000
-    - name: "9000"
+    - name: "tcp-9000"
       port: 9000
+      protocol: TCP
       targetPort: 9000
     - name: "9100"
       port: 9100

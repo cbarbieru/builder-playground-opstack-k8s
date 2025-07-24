@@ -18,10 +18,11 @@ spec:
     - name: "8549"
       port: 8549
       targetPort: 8549
-    - name: "9003"
+    - name: "tcp-9003"
       port: 9003
+      protocol: TCP
       targetPort: 9003
-    - name: "9003"
+    - name: "udp-9003"
       port: 9003
       protocol: UDP
       targetPort: 9003
