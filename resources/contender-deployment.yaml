@@ -73,7 +73,7 @@ spec:
             - name: scenario-config
               mountPath: /data/scenario
             - name: script-config
-              mountPath: /
+              mountPath: /script
             - name: jwt-secret
               mountPath: /data/jwtsecret
       volumes:
