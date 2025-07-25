@@ -23,28 +23,24 @@ data:
 
     PREFUNDED_PRIV_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
     PREFUNDED_ADDRESS=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-
-    ROLLUP_RPC=http://rollup-boost.default.svc.cluster.local:8551
-    BUILDER_RPC=http://op-rbuilder.default.svc.cluster.local:8551
-
     echo "Using prefunded address: $PREFUNDED_ADDRESS"
 
     echo "Running contender setup..."
     contender setup \
       -p $PREFUNDED_PRIV_KEY \
       /data/scenario/stress.toml \
-      -r $ROLLUP_RPC \
-      --optimism
+      -r http://rollup-boost.default.svc.cluster.local:8551 \
+      --op
 
     echo "Running fill-block spam workload..."
     contender spam \
-      --tpb 50 \
-      -d 10 \
-      --min-balance 0.2eth \
+      --tpb 50 -d 10 -l 3 \
       -p $PREFUNDED_PRIV_KEY \
-      --auth $BUILDER_RPC \
+      -r http://op-rbuilder.default.svc.cluster.local:8545 \
+      --auth http://op-rbuilder.default.svc.cluster.local:8551 \
       --jwt /data/jwtsecret \
-      --optimism fill-block
+      --fcu \
+      --op fill-block
 ---
 apiVersion: apps/v1
 kind: Deployment
