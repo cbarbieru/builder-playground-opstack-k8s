@@ -107,9 +107,11 @@ spec:
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
+            type: File
           name: op-node-hostpath1
         - hostPath:
             path: /mnt/sceal/storage/rollup.json
+            type: File
           name: op-node-hostpath2
         - hostPath:
             path: /mnt/sceal/storage/volume-op-node-data

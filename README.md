@@ -1,21 +1,38 @@
 # MicroK8s
+Installation of MicroK8s:
+
 ```bash
 sudo snap install microk8s --classic --channel=1.33/stable
 echo "alias k='microk8s kubectl'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+You may want to add `microk8s` to the suddoer group
+
+```bash
+sudo usermod -a -G microk8s $USER
+mkdir -p ~/.kube
+chmod 0700 ~/.kube
+```
+
+You will also need to logout for the change to take place.
+
 # Operator
+Operator manages the lifecycle of TDX workloads, by relaying on Katacontainer
+
+**NOTE:** `roseblanche-1` correspond to the ssh config of the TDX vm, it should be adapted.
+
 ```bash
 git clone https://github.com/cbarbieru/operator.git
+cd ./operator
 git checkout microk8s_patch
 
-cd ~/operator/config/release/
+cd ${PWD}/config/release/
 k apply -k .
 
 k label node rosablanche-1 node.kubernetes.io/worker="" --overwrite
 
-cd ~/operator/config/samples/ccruntime/default
+cd ${PWD}/config/samples/ccruntime/default
 k apply -k .
 ```
 
@@ -64,11 +81,13 @@ Restart containerd
 sudo systemctl restart snap.microk8s.daemon-containerd.service
 ```
 
-# K8 Deployment
+# K8s Deployment
+Allow to deploy the K8s setup. This can be done locally, simply by running this, or with `operator` and `katacontainer` on a TDX vm, by running the previous section.
+
 ```bash
 git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
 cd ~/builder-playground-opstack-k8s
-mkdir -p /mnt/sceal/storage
-sudo cp -a storage/. /mnt/sceal/storage/
+sudo mkdir -p /mnt/sceal/storage
+sudo cp -a storage/. /mnt/sceal/storage
 k apply -f ./resources/
 ```

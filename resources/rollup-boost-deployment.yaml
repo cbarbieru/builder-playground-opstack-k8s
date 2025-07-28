@@ -56,4 +56,5 @@ spec:
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
+            type: File
           name: rollup-boost-hostpath1

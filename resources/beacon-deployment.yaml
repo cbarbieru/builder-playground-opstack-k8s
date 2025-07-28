@@ -105,6 +105,7 @@ spec:
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
+            type: File
           name: beacon-hostpath0
         - hostPath:
             path: /mnt/sceal/storage/testnet

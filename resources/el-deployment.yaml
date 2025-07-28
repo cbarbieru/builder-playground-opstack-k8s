@@ -93,7 +93,9 @@ spec:
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/genesis.json
+            type: File
           name: el-hostpath1
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
+            type: File
           name: el-hostpath2

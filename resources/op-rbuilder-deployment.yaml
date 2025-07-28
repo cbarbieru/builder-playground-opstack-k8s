@@ -88,4 +88,5 @@ spec:
           name: op-rbuilder-hostpath1
         - hostPath:
             path: /mnt/sceal/storage/l2-genesis.json
+            type: File
           name: op-rbuilder-hostpath2

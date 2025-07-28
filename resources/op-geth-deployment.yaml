@@ -41,7 +41,7 @@ spec:
       containers:
         - args:
             - -c
-            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/p2p_key.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 6061
+            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/enode-key-1.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 6061
           command:
             - /bin/sh
           image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101503.2-rc.5
@@ -62,16 +62,19 @@ spec:
               name: op-geth-hostpath1
             - mountPath: /data/jwtsecret
               name: op-geth-hostpath2
-            - mountPath: /data/p2p_key.txt
+            - mountPath: /data/enode-key-1.txt
               name: op-geth-hostpath3
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/l2-genesis.json
+            type: File
           name: op-geth-hostpath1
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
+            type: File
           name: op-geth-hostpath2
         - hostPath:
             path: /mnt/sceal/storage/enode-key-1.txt
+            type: File
           name: op-geth-hostpath3
