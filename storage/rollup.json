@@ -21,7 +21,7 @@
       "hash": "0x4aab1ce7ee5d3bdb43847b874164649c6714fa8e6d8ce388148007e26318c238",
       "number": 0
     },
-    "l2_time": 0,
+    "l2_time": 1753275515,
     "system_config": {
       "batcherAddr": "0xaff0ca253b97e54440965855cec0a8a2e2399896",
       "eip1559Params": "0x0000000000000000",
