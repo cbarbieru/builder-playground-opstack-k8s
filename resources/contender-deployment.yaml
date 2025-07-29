@@ -62,7 +62,7 @@ data:
     contender setup \
       -p $PREFUNDED_PRIV_KEY \
       /data/scenario/stress.toml \
-      -r http://rollup-boost.default.svc.cluster.local:8551 \
+      -r http://rollup-boost:8551 \
       --op
 
     echo "Running fill-block spam workload..."
@@ -70,10 +70,7 @@ data:
       --tps 50 -d 10 -l 1 \
       --min-balance 0.2eth \
       -p $PREFUNDED_PRIV_KEY \
-      -r http://op-rbuilder.default.svc.cluster.local:8545 \
-      # --auth http://op-rbuilder.default.svc.cluster.local:8551 \
-      # --jwt /data/jwtsecret \
-      # --fcu \
+      -r http://op-rbuilder:8545 \
       --op fill-block
 ---
 apiVersion: apps/v1
