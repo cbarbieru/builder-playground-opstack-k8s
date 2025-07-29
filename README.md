@@ -7,16 +7,16 @@ source ~/.bashrc
 
 # Operator
 ```bash
+cd ~/
 git clone https://github.com/cbarbieru/operator.git
+cd operator/
 git checkout microk8s_patch
 
-cd ~/operator/config/release/
-k apply -k .
+k apply -k config/release/
 
 k label node rosablanche-1 node.kubernetes.io/worker="" --overwrite
 
-cd ~/operator/config/samples/ccruntime/default
-k apply -k .
+k apply -k config/samples/ccruntime/default
 ```
 
 ## For operator pre-install errors
@@ -66,9 +66,10 @@ sudo systemctl restart snap.microk8s.daemon-containerd.service
 
 # K8 Deployment
 ```bash
+cd ~/
 git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
-cd ~/builder-playground-opstack-k8s
+cd builder-playground-opstack-k8s
 mkdir -p /mnt/sceal/storage
 sudo cp -a storage/. /mnt/sceal/storage/
-k apply -f ./resources/
+k apply -f resources/
 ```
