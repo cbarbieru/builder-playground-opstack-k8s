@@ -1,0 +1,1072 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.http: "3500"
+    port.p2p: "9000"
+    port.quic-p2p: "9100"
+    service: beacon
+  creationTimestamp: null
+  labels:
+    io.kompose.service: beacon
+  name: beacon
+  namespace: default
+spec:
+  ports:
+    - name: "udp-9000"
+      port: 9000
+      protocol: UDP
+      targetPort: tcp-9000
+    - name: "9000"
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+    - name: "9100"
+      port: 9100
+      targetPort: 9100
+    - name: "3500"
+      port: 3500
+      targetPort: 3500
+  selector:
+    io.kompose.service: beacon
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: el
+  creationTimestamp: null
+  labels:
+    io.kompose.service: el
+  name: el
+  namespace: default
+spec:
+  ports:
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "8546"
+      port: 8546
+      targetPort: 8546
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+  selector:
+    io.kompose.service: el
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "6061"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: op-geth
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-geth
+  name: op-geth
+  namespace: default
+spec:
+  ports:
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "8546"
+      port: 8546
+      targetPort: 8546
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+    - name: "6061"
+      port: 6061
+      targetPort: 6061
+  selector:
+    io.kompose.service: op-geth
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.http: "8549"
+    port.metrics: "7300"
+    port.p2p: "9003"
+    service: op-node
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-node
+  name: op-node
+  namespace: default
+spec:
+  ports:
+    - name: "8549"
+      port: 8549
+      targetPort: 8549
+    - name: "tcp-9003"
+      port: 9003
+      protocol: TCP
+      targetPort: 9003
+    - name: "udp-9003"
+      port: 9003
+      protocol: UDP
+      targetPort: 9003
+    - name: "7300"
+      port: 7300
+      targetPort: 7300
+  selector:
+    io.kompose.service: op-node
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    service: op-rbuilder
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-rbuilder
+  name: op-rbuilder
+  namespace: default
+spec:
+  ports:
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+    - name: "8545"
+      port: 8545
+      targetPort: 8545
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+    - name: "30303"
+      port: 30303
+      targetPort: 30303
+  selector:
+    io.kompose.service: op-rbuilder
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    service: rollup-boost
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rollup-boost
+  name: rollup-boost
+  namespace: default
+spec:
+  ports:
+    - name: "8551"
+      port: 8551
+      targetPort: 8551
+  selector:
+    io.kompose.service: rollup-boost
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.http: "3500"
+    port.p2p: "9000"
+    port.quic-p2p: "9100"
+    service: beacon
+  creationTimestamp: null
+  labels:
+    io.kompose.service: beacon
+  name: beacon
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: beacon
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        port.http: "3500"
+        port.p2p: "9000"
+        port.quic-p2p: "9100"
+        service: beacon
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: beacon
+    spec:
+      containers:
+        - args:
+            - bn
+            - --datadir
+            - /data_beacon
+            - --testnet-dir
+            - /data/testnet-dir
+            - --enable-private-discovery
+            - --disable-peer-scoring
+            - --staking
+            - --enr-address
+            - 127.0.0.1
+            - --enr-udp-port
+            - "9000"
+            - --enr-tcp-port
+            - "9000"
+            - --enr-quic-port
+            - "9100"
+            - --port
+            - "9000"
+            - --quic-port
+            - "9100"
+            - --http
+            - --http-port
+            - "3500"
+            - --http-address
+            - 0.0.0.0
+            - --http-allow-origin
+            - '*'
+            - --disable-packet-filter
+            - --target-peers
+            - "0"
+            - --execution-endpoint
+            - http://el:8551
+            - --execution-jwt
+            - /data/jwtsecret
+            - --always-prepare-payload
+            - --prepare-payload-lookahead
+            - "8000"
+            - --suggested-fee-recipient
+            - 0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990
+          command:
+            - lighthouse
+          image: sigp/lighthouse:v7.0.0-beta.0
+          livenessProbe:
+            exec:
+              command:
+                - chmod +x /artifacts/scripts/query.sh && /artifacts/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
+            failureThreshold: 3
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            timeoutSeconds: 30
+          name: beacon
+          ports:
+            - containerPort: 9000
+              hostIP: 127.0.0.1
+              hostPort: 9000
+              protocol: UDP
+            - containerPort: 9000
+              hostIP: 127.0.0.1
+              hostPort: 9001
+              protocol: TCP
+            - containerPort: 9100
+              hostIP: 127.0.0.1
+              hostPort: 9100
+              protocol: TCP
+            - containerPort: 3500
+              hostIP: 127.0.0.1
+              hostPort: 3500
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /artifacts
+              name: beacon-hostpath0
+            - mountPath: /data/testnet-dir
+              name: beacon-hostpath1
+            - mountPath: /data/jwtsecret
+              name: beacon-hostpath2
+            - mountPath: /data_beacon
+              name: beacon-hostpath3
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: beacon-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/testnet
+          name: beacon-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: beacon-hostpath2
+        - hostPath:
+            path: /mnt/sceal/storage/volume-beacon-data
+          name: beacon-hostpath3
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: el
+  creationTimestamp: null
+  labels:
+    io.kompose.service: el
+  name: el
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: el
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        port.authrpc: "8551"
+        port.http: "8545"
+        port.metrics: "9090"
+        port.rpc: "30303"
+        port.ws: "8546"
+        service: el
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: el
+    spec:
+      containers:
+        - args:
+            - node
+            - --chain
+            - /data/genesis.json
+            - --datadir
+            - /data_reth
+            - --color
+            - never
+            - --ipcpath
+            - /data_reth/reth.ipc
+            - --addr
+            - 127.0.0.1
+            - --port
+            - "30303"
+            - --http
+            - --http.addr
+            - 0.0.0.0
+            - --http.api
+            - admin,eth,web3,net,rpc,mev,flashbots
+            - --http.port
+            - "8545"
+            - --ws
+            - --ws.addr
+            - 0.0.0.0
+            - --ws.port
+            - "8546"
+            - --ws.api
+            - eth,web3,net,txpool,debug,trace
+            - --ws.origins
+            - '*'
+            - --authrpc.port
+            - "8551"
+            - --authrpc.addr
+            - 0.0.0.0
+            - --authrpc.jwtsecret
+            - /data/jwtsecret
+            - --metrics
+            - 0.0.0.0:9090
+            - --engine.persistence-threshold
+            - "0"
+            - --engine.memory-block-buffer-target
+            - "0"
+            - -vvv
+          command:
+            - /usr/local/bin/reth
+          image: ghcr.io/paradigmxyz/reth:v1.4.8
+          name: el
+          ports:
+            - containerPort: 30303
+              hostIP: 127.0.0.1
+              hostPort: 30303
+              protocol: TCP
+            - containerPort: 8545
+              hostIP: 127.0.0.1
+              hostPort: 8545
+              protocol: TCP
+            - containerPort: 8546
+              hostIP: 127.0.0.1
+              hostPort: 8546
+              protocol: TCP
+            - containerPort: 8551
+              hostIP: 127.0.0.1
+              hostPort: 8551
+              protocol: TCP
+            - containerPort: 9090
+              hostIP: 127.0.0.1
+              hostPort: 9090
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /artifacts
+              name: el-hostpath0
+            - mountPath: /data/genesis.json
+              name: el-hostpath1
+            - mountPath: /data/jwtsecret
+              name: el-hostpath2
+            - mountPath: /data_reth
+              name: el-hostpath3
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: el-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/genesis.json
+          name: el-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: el-hostpath2
+        - hostPath:
+            path: /mnt/sceal/storage/volume-el-data
+          name: el-hostpath3
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    service: op-batcher
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-batcher
+  name: op-batcher
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: op-batcher
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        service: op-batcher
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: op-batcher
+    spec:
+      containers:
+        - args:
+            - --l1-eth-rpc
+            - http://el:8545
+            - --l2-eth-rpc
+            - http://op-geth:8545
+            - --rollup-rpc
+            - http://op-node:8549
+            - --max-channel-duration=2
+            - --sub-safety-margin=4
+            - --poll-interval=1s
+            - --num-confirmations=1
+            - --private-key=0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6
+          command:
+            - op-batcher
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-batcher:v1.12.0-rc.1
+          name: op-batcher
+          resources: {}
+          volumeMounts:
+            - mountPath: /artifacts
+              name: op-batcher-hostpath0
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: op-batcher-hostpath0
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "6061"
+    port.rpc: "30303"
+    port.ws: "8546"
+    service: op-geth
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-geth
+  name: op-geth
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: op-geth
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        port.authrpc: "8551"
+        port.http: "8545"
+        port.metrics: "6061"
+        port.rpc: "30303"
+        port.ws: "8546"
+        service: op-geth
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: op-geth
+    spec:
+      containers:
+        - args:
+            - -c
+            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/p2p_key.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 6061
+          command:
+            - /bin/sh
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101503.2-rc.5
+          name: op-geth
+          ports:
+            - containerPort: 8545
+              hostIP: 127.0.0.1
+              hostPort: 8547
+              protocol: TCP
+            - containerPort: 8546
+              hostIP: 127.0.0.1
+              hostPort: 8548
+              protocol: TCP
+            - containerPort: 8551
+              hostIP: 127.0.0.1
+              hostPort: 8552
+              protocol: TCP
+            - containerPort: 30303
+              hostIP: 127.0.0.1
+              hostPort: 30304
+              protocol: TCP
+            - containerPort: 6061
+              hostIP: 127.0.0.1
+              hostPort: 6061
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /data/p2p_key.txt
+              name: op-geth-hostpath0
+            - mountPath: /data/l2-genesis.json
+              name: op-geth-hostpath1
+            - mountPath: /data_opgeth
+              name: op-geth-hostpath2
+            - mountPath: /artifacts
+              name: op-geth-hostpath3
+            - mountPath: /data/jwtsecret
+              name: op-geth-hostpath4
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage/enode-key-1.txt
+          name: op-geth-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/l2-genesis.json
+          name: op-geth-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/volume-op-geth-data
+          name: op-geth-hostpath2
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: op-geth-hostpath3
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: op-geth-hostpath4
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.http: "8549"
+    port.metrics: "7300"
+    port.p2p: "9003"
+    service: op-node
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-node
+  name: op-node
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: op-node
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        port.http: "8549"
+        port.metrics: "7300"
+        port.p2p: "9003"
+        service: op-node
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: op-node
+    spec:
+      containers:
+        - args:
+            - --l1
+            - http://el:8545
+            - --l1.beacon
+            - http://beacon:3500
+            - --l1.epoch-poll-interval
+            - 12s
+            - --l1.http-poll-interval
+            - 6s
+            - --l2
+            - http://rollup-boost:8551
+            - --l2.jwt-secret
+            - /data/jwtsecret
+            - --sequencer.enabled
+            - --sequencer.l1-confs
+            - "0"
+            - --verifier.l1-confs
+            - "0"
+            - --p2p.sequencer.key
+            - 8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba
+            - --rollup.config
+            - /data/rollup.json
+            - --rpc.addr
+            - 0.0.0.0
+            - --rpc.port
+            - "8549"
+            - --p2p.listen.ip
+            - 0.0.0.0
+            - --p2p.listen.tcp
+            - "9003"
+            - --p2p.listen.udp
+            - "9003"
+            - --p2p.scoring.peers
+            - light
+            - --p2p.ban.peers
+            - "true"
+            - --metrics.enabled
+            - --metrics.addr
+            - 0.0.0.0
+            - --metrics.port
+            - "7300"
+            - --pprof.enabled
+            - --rpc.enable-admin
+            - --safedb.path
+            - /data_db
+          command:
+            - op-node
+          env:
+            - name: A
+              value: B
+          image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.13.0-rc.1
+          name: op-node
+          ports:
+            - containerPort: 8549
+              hostIP: 127.0.0.1
+              hostPort: 8550
+              protocol: TCP
+            - containerPort: 9003
+              hostIP: 127.0.0.1
+              hostPort: 9003
+              protocol: TCP
+            - containerPort: 9003
+              hostIP: 127.0.0.1
+              hostPort: 9004
+              protocol: UDP
+            - containerPort: 7300
+              hostIP: 127.0.0.1
+              hostPort: 7300
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /artifacts
+              name: op-node-hostpath0
+            - mountPath: /data/rollup.json
+              name: op-node-hostpath1
+            - mountPath: /data/jwtsecret
+              name: op-node-hostpath2
+            - mountPath: /data_db
+              name: op-node-hostpath3
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: op-node-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/rollup.json
+          name: op-node-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: op-node-hostpath2
+        - hostPath:
+            path: /mnt/sceal/storage/volume-op-node-data
+          name: op-node-hostpath3
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    port.http: "8545"
+    port.metrics: "9090"
+    port.rpc: "30303"
+    service: op-rbuilder
+  creationTimestamp: null
+  labels:
+    io.kompose.service: op-rbuilder
+  name: op-rbuilder
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: op-rbuilder
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        port.authrpc: "8551"
+        port.http: "8545"
+        port.metrics: "9090"
+        port.rpc: "30303"
+        service: op-rbuilder
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: op-rbuilder
+    spec:
+      containers:
+        - args:
+            - node
+            - --authrpc.port
+            - "8551"
+            - --authrpc.addr
+            - 0.0.0.0
+            - --authrpc.jwtsecret
+            - /data/jwtsecret
+            - --http
+            - --http.addr
+            - 0.0.0.0
+            - --http.port
+            - "8545"
+            - --chain
+            - /data/l2-genesis.json
+            - --datadir
+            - /data_op_reth
+            - --disable-discovery
+            - --color
+            - never
+            - --metrics
+            - 0.0.0.0:9090
+            - --port
+            - "30303"
+            - --builder.enable-revert-protection
+            - --trusted-peers
+            - enode://79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8@op-geth:30303
+          image: ghcr.io/flashbots/op-rbuilder:sha-4f1931b
+          name: op-rbuilder
+          ports:
+            - containerPort: 8551
+              hostIP: 127.0.0.1
+              hostPort: 8553
+              protocol: TCP
+            - containerPort: 8545
+              hostIP: 127.0.0.1
+              hostPort: 8549
+              protocol: TCP
+            - containerPort: 9090
+              hostIP: 127.0.0.1
+              hostPort: 9091
+              protocol: TCP
+            - containerPort: 30303
+              hostIP: 127.0.0.1
+              hostPort: 30305
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /data/l2-genesis.json
+              name: op-rbuilder-hostpath0
+            - mountPath: /data/jwtsecret
+              name: op-rbuilder-hostpath1
+            - mountPath: /data_op_reth
+              name: op-rbuilder-hostpath2
+            - mountPath: /artifacts
+              name: op-rbuilder-hostpath3
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage/l2-genesis.json
+          name: op-rbuilder-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: op-rbuilder-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/volume-op-rbuilder-data
+          name: op-rbuilder-hostpath2
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: op-rbuilder-hostpath3
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    port.authrpc: "8551"
+    service: rollup-boost
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rollup-boost
+  name: rollup-boost
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rollup-boost
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        port.authrpc: "8551"
+        service: rollup-boost
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: rollup-boost
+    spec:
+      containers:
+        - args:
+            - --rpc-host
+            - 0.0.0.0
+            - --rpc-port
+            - "8551"
+            - --l2-jwt-path
+            - /data/jwtsecret
+            - --l2-url
+            - http://op-geth:8551
+            - --builder-jwt-path
+            - /data/jwtsecret
+            - --builder-url
+            - http://op-rbuilder:8551
+          image: docker.io/flashbots/rollup-boost:0.7.0
+          name: rollup-boost
+          ports:
+            - containerPort: 8551
+              hostIP: 127.0.0.1
+              hostPort: 8554
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /artifacts
+              name: rollup-boost-hostpath0
+            - mountPath: /data/jwtsecret
+              name: rollup-boost-hostpath1
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: rollup-boost-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/jwtsecret
+          name: rollup-boost-hostpath1
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+    kompose.version: 1.31.0 (a04ecdb9e)
+    playground: "true"
+    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+    service: validator
+  creationTimestamp: null
+  labels:
+    io.kompose.service: validator
+  name: validator
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: validator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
+        kompose.version: 1.31.0 (a04ecdb9e)
+        playground: "true"
+        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
+        service: validator
+      creationTimestamp: null
+      labels:
+        io.kompose.network/ethplayground: "true"
+        io.kompose.service: validator
+    spec:
+      containers:
+        - args:
+            - vc
+            - --datadir
+            - /data/validator
+            - --testnet-dir
+            - /data/testnet-dir
+            - --init-slashing-protection
+            - --beacon-nodes
+            - http://beacon:3500
+            - --suggested-fee-recipient
+            - 0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990
+            - --builder-proposals
+            - --prefer-builder-proposals
+          command:
+            - lighthouse
+          image: sigp/lighthouse:v7.0.0-beta.0
+          name: validator
+          resources: {}
+          volumeMounts:
+            - mountPath: /artifacts
+              name: validator-hostpath0
+            - mountPath: /data/validator
+              name: validator-hostpath1
+            - mountPath: /data/testnet-dir
+              name: validator-hostpath2
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: validator-hostpath0
+        - hostPath:
+            path: /mnt/sceal/storage/data_validator
+          name: validator-hostpath1
+        - hostPath:
+            path: /mnt/sceal/storage/testnet
+          name: validator-hostpath2
+status: {}
+
