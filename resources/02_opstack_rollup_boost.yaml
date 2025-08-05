@@ -312,9 +312,7 @@ spec:
           livenessProbe:
             exec:
               command:
-                - sh
-                - -c
-                - "curl --fail http://localhost:3500/eth/v1/node/syncing"
+                - chmod +x /artifacts/scripts/query.sh && /artifacts/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
             failureThreshold: 3
             initialDelaySeconds: 1
             periodSeconds: 1
@@ -417,7 +415,7 @@ spec:
             - --ipcpath
             - /data_reth/reth.ipc
             - --addr
-            - 127.0.0.1
+            - $(POD_IP)
             - --port
             - "30303"
             - --http
@@ -453,26 +451,21 @@ spec:
             - /usr/local/bin/reth
           image: ghcr.io/paradigmxyz/reth:v1.4.8
           name: el
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           ports:
             - containerPort: 30303
-              hostIP: 127.0.0.1
-              hostPort: 30303
               protocol: TCP
             - containerPort: 8545
-              hostIP: 127.0.0.1
-              hostPort: 8545
               protocol: TCP
             - containerPort: 8546
-              hostIP: 127.0.0.1
-              hostPort: 8546
               protocol: TCP
             - containerPort: 8551
-              hostIP: 127.0.0.1
-              hostPort: 8551
               protocol: TCP
             - containerPort: 9090
-              hostIP: 127.0.0.1
-              hostPort: 9090
               protocol: TCP
           resources: {}
           volumeMounts:
@@ -618,24 +611,14 @@ spec:
           name: op-geth
           ports:
             - containerPort: 8545
-              hostIP: 127.0.0.1
-              hostPort: 8547
               protocol: TCP
             - containerPort: 8546
-              hostIP: 127.0.0.1
-              hostPort: 8548
               protocol: TCP
             - containerPort: 8551
-              hostIP: 127.0.0.1
-              hostPort: 8552
               protocol: TCP
             - containerPort: 30303
-              hostIP: 127.0.0.1
-              hostPort: 30304
               protocol: TCP
             - containerPort: 6061
-              hostIP: 127.0.0.1
-              hostPort: 6061
               protocol: TCP
           resources: {}
           volumeMounts:
@@ -764,20 +747,12 @@ spec:
           name: op-node
           ports:
             - containerPort: 8549
-              hostIP: 127.0.0.1
-              hostPort: 8550
               protocol: TCP
             - containerPort: 9003
-              hostIP: 127.0.0.1
-              hostPort: 9003
               protocol: TCP
             - containerPort: 9003
-              hostIP: 127.0.0.1
-              hostPort: 9004
               protocol: UDP
             - containerPort: 7300
-              hostIP: 127.0.0.1
-              hostPort: 7300
               protocol: TCP
           resources: {}
           volumeMounts:
@@ -880,20 +855,12 @@ spec:
           name: op-rbuilder
           ports:
             - containerPort: 8551
-              hostIP: 127.0.0.1
-              hostPort: 8553
               protocol: TCP
             - containerPort: 8545
-              hostIP: 127.0.0.1
-              hostPort: 8549
               protocol: TCP
             - containerPort: 9090
-              hostIP: 127.0.0.1
-              hostPort: 9091
               protocol: TCP
             - containerPort: 30303
-              hostIP: 127.0.0.1
-              hostPort: 30305
               protocol: TCP
           resources: {}
           volumeMounts:
@@ -976,8 +943,6 @@ spec:
           name: rollup-boost
           ports:
             - containerPort: 8551
-              hostIP: 127.0.0.1
-              hostPort: 8554
               protocol: TCP
           resources: {}
           volumeMounts:
