@@ -271,7 +271,7 @@ spec:
             - --datadir
             - /data_beacon
             - --testnet-dir
-            - /data/testnet-dir
+            - /data/testnet
             - --enable-private-discovery
             - --disable-peer-scoring
             - --staking
@@ -312,7 +312,7 @@ spec:
           livenessProbe:
             exec:
               command:
-                - chmod +x /artifacts/scripts/query.sh && /artifacts/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
+                - chmod +x /data/scripts/query.sh && /data/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
             failureThreshold: 3
             initialDelaySeconds: 1
             periodSeconds: 1
@@ -334,28 +334,13 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /artifacts
-              name: beacon-hostpath0
-            - mountPath: /data/testnet-dir
-              name: beacon-hostpath1
-            - mountPath: /data/jwtsecret
-              name: beacon-hostpath2
-            - mountPath: /data_beacon
-              name: beacon-hostpath3
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage
-          name: beacon-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/testnet
-          name: beacon-hostpath1
-        - hostPath:
-            path: /mnt/sceal/storage/jwtsecret
-          name: beacon-hostpath2
-        - hostPath:
-            path: /mnt/sceal/storage/volume-beacon-data
-          name: beacon-hostpath3
+          name: data
 status: {}
 
 ---
@@ -469,28 +454,13 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /artifacts
-              name: el-hostpath0
-            - mountPath: /data/genesis.json
-              name: el-hostpath1
-            - mountPath: /data/jwtsecret
-              name: el-hostpath2
-            - mountPath: /data_reth
-              name: el-hostpath3
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage
-          name: el-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/genesis.json
-          name: el-hostpath1
-        - hostPath:
-            path: /mnt/sceal/storage/jwtsecret
-          name: el-hostpath2
-        - hostPath:
-            path: /mnt/sceal/storage/volume-el-data
-          name: el-hostpath3
+          name: data
 status: {}
 
 ---
@@ -547,13 +517,13 @@ spec:
           name: op-batcher
           resources: {}
           volumeMounts:
-            - mountPath: /artifacts
-              name: op-batcher-hostpath0
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage
-          name: op-batcher-hostpath0
+          name: data
 status: {}
 
 ---
@@ -604,7 +574,7 @@ spec:
       containers:
         - args:
             - -c
-            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/p2p_key.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 6061
+            - geth init --datadir /data_opgeth --state.scheme hash /data/l2-genesis.json && exec geth --datadir /data_opgeth --verbosity 3 --http --http.corsdomain "*" --http.vhosts "*" --http.addr 0.0.0.0 --http.port 8545 --http.api web3,debug,eth,txpool,net,engine,miner --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --ws.api debug,eth,txpool,net,engine,miner --syncmode full --nodiscover --maxpeers 5 --rpc.allow-unprotected-txs --authrpc.addr 0.0.0.0 --authrpc.port 8551 --authrpc.vhosts "*" --authrpc.jwtsecret /data/jwtsecret --gcmode archive --state.scheme hash --port 30303 --nodekey /data/enode-key-1.txt --metrics --metrics.addr 0.0.0.0 --metrics.port 6061
           command:
             - /bin/sh
           image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101503.2-rc.5
@@ -622,33 +592,13 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /data/p2p_key.txt
-              name: op-geth-hostpath0
-            - mountPath: /data/l2-genesis.json
-              name: op-geth-hostpath1
-            - mountPath: /data_opgeth
-              name: op-geth-hostpath2
-            - mountPath: /artifacts
-              name: op-geth-hostpath3
-            - mountPath: /data/jwtsecret
-              name: op-geth-hostpath4
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: /mnt/sceal/storage/enode-key-1.txt
-          name: op-geth-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/l2-genesis.json
-          name: op-geth-hostpath1
-        - hostPath:
-            path: /mnt/sceal/storage/volume-op-geth-data
-          name: op-geth-hostpath2
-        - hostPath:
             path: /mnt/sceal/storage
-          name: op-geth-hostpath3
-        - hostPath:
-            path: /mnt/sceal/storage/jwtsecret
-          name: op-geth-hostpath4
+          name: data
 status: {}
 
 ---
@@ -756,28 +706,13 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /artifacts
-              name: op-node-hostpath0
-            - mountPath: /data/rollup.json
-              name: op-node-hostpath1
-            - mountPath: /data/jwtsecret
-              name: op-node-hostpath2
-            - mountPath: /data_db
-              name: op-node-hostpath3
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage
-          name: op-node-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/rollup.json
-          name: op-node-hostpath1
-        - hostPath:
-            path: /mnt/sceal/storage/jwtsecret
-          name: op-node-hostpath2
-        - hostPath:
-            path: /mnt/sceal/storage/volume-op-node-data
-          name: op-node-hostpath3
+          name: data
 status: {}
 
 ---
@@ -864,28 +799,13 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /data/l2-genesis.json
-              name: op-rbuilder-hostpath0
-            - mountPath: /data/jwtsecret
-              name: op-rbuilder-hostpath1
-            - mountPath: /data_op_reth
-              name: op-rbuilder-hostpath2
-            - mountPath: /artifacts
-              name: op-rbuilder-hostpath3
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: /mnt/sceal/storage/l2-genesis.json
-          name: op-rbuilder-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/jwtsecret
-          name: op-rbuilder-hostpath1
-        - hostPath:
-            path: /mnt/sceal/storage/volume-op-rbuilder-data
-          name: op-rbuilder-hostpath2
-        - hostPath:
             path: /mnt/sceal/storage
-          name: op-rbuilder-hostpath3
+          name: data
 status: {}
 
 ---
@@ -946,18 +866,13 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /artifacts
-              name: rollup-boost-hostpath0
-            - mountPath: /data/jwtsecret
-              name: rollup-boost-hostpath1
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage
-          name: rollup-boost-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/jwtsecret
-          name: rollup-boost-hostpath1
+          name: data
 status: {}
 
 ---
@@ -1001,7 +916,7 @@ spec:
             - --datadir
             - /data/validator
             - --testnet-dir
-            - /data/testnet-dir
+            - /data/testnet
             - --init-slashing-protection
             - --beacon-nodes
             - http://beacon:3500
@@ -1015,22 +930,12 @@ spec:
           name: validator
           resources: {}
           volumeMounts:
-            - mountPath: /artifacts
-              name: validator-hostpath0
-            - mountPath: /data/validator
-              name: validator-hostpath1
-            - mountPath: /data/testnet-dir
-              name: validator-hostpath2
+            - mountPath: /data
+              name: data
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage
-          name: validator-hostpath0
-        - hostPath:
-            path: /mnt/sceal/storage/data_validator
-          name: validator-hostpath1
-        - hostPath:
-            path: /mnt/sceal/storage/testnet
-          name: validator-hostpath2
+          name: data
 status: {}
 
