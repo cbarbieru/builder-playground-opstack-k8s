@@ -758,6 +758,7 @@ spec:
         io.kompose.network/ethplayground: "true"
         io.kompose.service: op-rbuilder
     spec:
+      runtimeClassName: kata-qemu-tdx
       containers:
         - args:
             - node
