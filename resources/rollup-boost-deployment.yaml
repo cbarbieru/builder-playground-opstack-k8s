@@ -2,33 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-    kompose.version: 1.36.0 (HEAD)
-    playground: "true"
-    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
     port.authrpc: "8551"
     service: rollup-boost
   labels:
-    io.kompose.service: rollup-boost
+    l2.service: rollup-boost
   name: rollup-boost
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: rollup-boost
+      l2.service: rollup-boost
   strategy:
     type: Recreate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-        kompose.version: 1.36.0 (HEAD)
-        playground: "true"
-        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
         port.authrpc: "8551"
         service: rollup-boost
       labels:
-        io.kompose.service: rollup-boost
+        l2.service: rollup-boost
     spec:
       containers:
         - args:
@@ -51,10 +43,10 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /data/jwtsecret
-              name: rollup-boost-hostpath1
+              name: rollup-boost-jwtsecret
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
             type: File
-          name: rollup-boost-hostpath1
+          name: rollup-boost-jwtsecret

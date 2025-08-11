@@ -1,18 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-    kompose.version: 1.36.0 (HEAD)
-    playground: "true"
-    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
-    port.authrpc: "8551"
-    port.http: "8545"
-    port.metrics: "9090"
-    port.rpc: "30303"
-    service: el
   labels:
-    io.kompose.service: el
+    l1.service: el
   name: el
 spec:
   ports:
@@ -22,6 +12,9 @@ spec:
     - name: "8545"
       port: 8545
       targetPort: 8545
+    - name: "8546"
+      port: 8546
+      targetPort: 8546
     - name: "8551"
       port: 8551
       targetPort: 8551
@@ -29,4 +22,4 @@ spec:
       port: 9090
       targetPort: 9090
   selector:
-    io.kompose.service: el
+    l1.service: el

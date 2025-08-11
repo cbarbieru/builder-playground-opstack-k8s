@@ -2,10 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-    kompose.version: 1.36.0 (HEAD)
-    playground: "true"
-    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
     port.authrpc: "8551"
     port.http: "8545"
     port.metrics: "6061"
@@ -13,22 +9,18 @@ metadata:
     port.ws: "8546"
     service: op-geth
   labels:
-    io.kompose.service: op-geth
+    l2.service: op-geth
   name: op-geth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: op-geth
+      l2.service: op-geth
   strategy:
     type: Recreate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-        kompose.version: 1.36.0 (HEAD)
-        playground: "true"
-        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
         port.authrpc: "8551"
         port.http: "8545"
         port.metrics: "6061"
@@ -36,7 +28,7 @@ spec:
         port.ws: "8546"
         service: op-geth
       labels:
-        io.kompose.service: op-geth
+        l2.service: op-geth
     spec:
       containers:
         - args:
@@ -59,22 +51,22 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /data/l2-genesis.json
-              name: op-geth-hostpath1
+              name: op-geth-l2-genesis
             - mountPath: /data/jwtsecret
-              name: op-geth-hostpath2
+              name: op-geth-jwtsecret
             - mountPath: /data/enode-key-1.txt
-              name: op-geth-hostpath3
+              name: op-geth-enode-key
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/l2-genesis.json
             type: File
-          name: op-geth-hostpath1
+          name: op-geth-l2-genesis
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
             type: File
-          name: op-geth-hostpath2
+          name: op-geth-jwtsecret
         - hostPath:
             path: /mnt/sceal/storage/enode-key-1.txt
             type: File
-          name: op-geth-hostpath3
+          name: op-geth-enode-key

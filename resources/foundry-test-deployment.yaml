@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foundry-test
+  labels:
+    app: foundry-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: foundry-test
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: foundry-test
+    spec:
+      containers:
+        - name: foundry-test
+          image: ghcr.io/foundry-rs/foundry:latest
+          command: ["/bin/sh", "-c"]
+          args: ["sleep infinity"]
+          env:
+            - name: RPC_URL
+              value: http://op-geth:8545
+            - name: ADDR
+              value: 0xEbFDBdc8Dc86220aad9C581E0Bd68391bC11e170
+            - name: PRIV_KEY
+              value: 0x6e618720a28574533d1abe73babd6b2a87095a1361ab18572d995ba9fd1629b5
+      restartPolicy: Always
+

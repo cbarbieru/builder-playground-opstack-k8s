@@ -2,40 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-    kompose.version: 1.36.0 (HEAD)
-    playground: "true"
-    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
-    port.http: "3500"
-    port.p2p: "9000"
-    port.quic-p2p: "9100"
     service: beacon
   labels:
-    io.kompose.service: beacon
+    l1.service: beacon
   name: beacon
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: beacon
+      l1.service: beacon
   strategy:
     type: Recreate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-        kompose.version: 1.36.0 (HEAD)
-        playground: "true"
-        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
-        port.http: "3500"
-        port.p2p: "9000"
-        port.quic-p2p: "9100"
         service: beacon
       labels:
-        io.kompose.service: beacon
+        l1.service: beacon
     spec:
       containers:
-        - args:
+        - name: beacon
+          image:
+            sigp/lighthouse:v7.0.0-beta.0
+          command:
+            - lighthouse
+          args:
             - bn
             - --datadir
             - /data_beacon
@@ -75,18 +66,19 @@ spec:
             - "8000"
             - --suggested-fee-recipient
             - 0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990
-          command:
-            - lighthouse
-          image: sigp/lighthouse:v7.0.0-beta.0
+            - --builder
+            - http://mev-boost:5555
+            - --builder-fallback-epochs-since-finalization
+            - "0"
+            - --builder-fallback-disable-checks
           livenessProbe:
-            exec:
-              command:
-                - chmod +x /artifacts/scripts/query.sh && /artifacts/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
             failureThreshold: 3
             initialDelaySeconds: 1
             periodSeconds: 1
             timeoutSeconds: 30
-          name: beacon
+            exec:
+              command:
+                - chmod +x /artifacts/scripts/query.sh && /artifacts/scripts/query.sh http://localhost:3500/eth/v1/node/syncing
           ports:
             - containerPort: 9000
               protocol: UDP
@@ -98,15 +90,21 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /data/jwtsecret
-              name: beacon-hostpath0
+              name: beacon-jwtsecret
             - mountPath: /data/testnet-dir
-              name: beacon-hostpath3
+              name: beacon-testnet
+            - mountPath: /artifacts
+              name: beacon-artifacts
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
             type: File
-          name: beacon-hostpath0
+          name: beacon-jwtsecret
         - hostPath:
             path: /mnt/sceal/storage/testnet
-          name: beacon-hostpath3
+          name: beacon-testnet
+        - hostPath:
+            path: /mnt/sceal/storage
+          name: beacon-artifacts
+          

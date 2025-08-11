@@ -2,10 +2,6 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-    kompose.version: 1.36.0 (HEAD)
-    playground: "true"
-    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
     port.authrpc: "8551"
     port.http: "8545"
     port.metrics: "6061"
@@ -13,7 +9,7 @@ metadata:
     port.ws: "8546"
     service: op-geth
   labels:
-    io.kompose.service: op-geth
+    l2.service: op-geth
   name: op-geth
 spec:
   ports:
@@ -33,4 +29,4 @@ spec:
       port: 6061
       targetPort: 6061
   selector:
-    io.kompose.service: op-geth
+    l2.service: op-geth

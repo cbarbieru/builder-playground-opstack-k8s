@@ -2,37 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-    kompose.version: 1.36.0 (HEAD)
-    playground: "true"
-    playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
     port.http: "8549"
     port.metrics: "7300"
     port.p2p: "9003"
     service: op-node
   labels:
-    io.kompose.service: op-node
+    l2.service: op-node
   name: op-node
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: op-node
+      l2.service: op-node
   strategy:
     type: Recreate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml --volumes hostPath -o /Users/claudiu/Projects/SCEAL/builder-playground-opstack-k8s/resources
-        kompose.version: 1.36.0 (HEAD)
-        playground: "true"
-        playground.session: 39ad23af-81d3-4605-bec9-a4ea81b1a3b8
         port.http: "8549"
         port.metrics: "7300"
         port.p2p: "9003"
         service: op-node
       labels:
-        io.kompose.service: op-node
+        l2.service: op-node
     spec:
       containers:
         - args:
@@ -98,21 +90,21 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /data/jwtsecret
-              name: op-node-hostpath1
+              name: op-node-jwtsecret
             - mountPath: /data/rollup.json
-              name: op-node-hostpath2
+              name: op-node-rollup
             - mountPath: /data_db
-              name: op-node-hostpath3
+              name: op-node-db
       restartPolicy: Always
       volumes:
         - hostPath:
             path: /mnt/sceal/storage/jwtsecret
             type: File
-          name: op-node-hostpath1
+          name: op-node-jwtsecret
         - hostPath:
             path: /mnt/sceal/storage/rollup.json
             type: File
-          name: op-node-hostpath2
+          name: op-node-rollup
         - hostPath:
             path: /mnt/sceal/storage/volume-op-node-data
-          name: op-node-hostpath3
+          name: op-node-db
