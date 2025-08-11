@@ -34,5 +34,5 @@ git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
 cd builder-playground-opstack-k8s
 mkdir -p /mnt/sceal/storage
 sudo cp -a storage/. /mnt/sceal/storage/
-k apply -f resources/
+k apply -f 00_opstack_rollup_boost.yaml -f 02_op-rbuilder_tdx.yaml -f contender-deployment.yaml -n test-2
 ```
