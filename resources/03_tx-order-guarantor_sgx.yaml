@@ -3,42 +3,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
-    kompose.version: 1.31.0 (a04ecdb9e)
-    playground: "true"
-    playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
     port.authrpc: "8551"
     port.http: "8545"
     port.metrics: "9090"
     port.rpc: "30303"
     service: op-rbuilder
-  creationTimestamp: null
   labels:
-    io.kompose.service: op-rbuilder
+    l2.service: op-rbuilder
   name: op-rbuilder
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: op-rbuilder
+      l2.service: op-rbuilder
   strategy:
     type: Recreate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f /mnt/sceal/storage/docker-compose.yaml --volumes hostPath -o /home/cbarbieru/bp-k8s-2/02_opstack_rollup_boost.yaml
-        kompose.version: 1.31.0 (a04ecdb9e)
-        playground: "true"
-        playground.session: 5c090b8d-ad86-4a1b-8562-eccb07e962de
         port.authrpc: "8551"
         port.http: "8545"
         port.metrics: "9090"
         port.rpc: "30303"
         service: op-rbuilder
-      creationTimestamp: null
       labels:
-        io.kompose.network/ethplayground: "true"
-        io.kompose.service: op-rbuilder
+        l2.service: op-rbuilder
     spec:
       containers:
         - args:
@@ -79,16 +68,20 @@ spec:
               protocol: TCP
             - containerPort: 30303
               protocol: TCP
-          resources: {}
           volumeMounts:
-            - mountPath: /data
-              name: data
+            - mountPath: /data/jwtsecret
+              name: op-rbuilder-jwtsecret
+            - mountPath: /data/l2-genesis.json
+              name: op-rbuilder-l2-genesis
       restartPolicy: Always
       volumes:
         - hostPath:
-            path: /mnt/sceal/storage
-          name: data
-status: {}
+            path: /mnt/sceal/storage/jwtsecret
+          name: op-rbuilder-jwtsecret
+        - hostPath:
+            path: /mnt/sceal/storage/l2-genesis.json
+            type: File
+          name: op-rbuilder-l2-genesis
 
 ---
 apiVersion: apps/v1
@@ -99,16 +92,16 @@ metadata:
     service: tx-order-guarantor
   name: tx-order-guarantor
   labels:
-    app: tx-order-guarantor
+    l2.service: tx-order-guarantor
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: tx-order-guarantor
+      l2.service: tx-order-guarantor
   template:
     metadata:
       labels:
-        io.kompose.service: tx-order-guarantor
+        l2.service: tx-order-guarantor
     spec:
       # runtimeClassName: enclave-cc
       containers:
@@ -124,7 +117,7 @@ metadata:
   name: tx-order-guarantor
 spec:
   selector:
-    io.kompose.service: tx-order-guarantor
+    l2.service: tx-order-guarantor
   ports:
     - protocol: TCP
       port: 8545

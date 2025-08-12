@@ -6,8 +6,17 @@ echo "alias k='sudo /usr/local/bin/k3s kubectl'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-# Install Kata
+# Install Kata (deprecated)
 Use instruction from [here](https://github.com/kata-containers/kata-containers/blob/main/tools/packaging/kata-deploy/helm-chart/README.m) making sure to preliminary set [k8sDistribution: "k3s"](https://github.com/kata-containers/kata-containers/blob/main/tools/packaging/kata-deploy/helm-chart/kata-deploy/values.yaml#L7).
+
+# Install CC Operator
+Operator introduces `enclave-cc` class runtime to allow running a container using more lightweight libOS over kata VM.
+```bash
+cd ~/
+git clone git@github.com:cbarbieru/operator.git
+k apply -k operator/config/samples/ccruntime/default/
+k apply -k operator/config/samples/enclave-cc/hw/
+``` 
 
 # Add devmapper plugin
 Use instructions from [here](https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md#configure-devmapper), then edit `/opt/kata/containerd/config.d/kata-deploy.toml` to contain the below
@@ -26,6 +35,7 @@ privileged_without_host_devices = true
 pod_annotations = ["io.katacontainers.*"]
 snapshotter = "devmapper"
 </pre>
+Restart k3s (containerd) with `sudo systemctl restart k3s`.
 
 # K8 Deployment
 ```bash
@@ -34,5 +44,7 @@ git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
 cd builder-playground-opstack-k8s
 mkdir -p /mnt/sceal/storage
 sudo cp -a storage/. /mnt/sceal/storage/
-k apply -f 00_opstack_rollup_boost.yaml -f 02_op-rbuilder_tdx.yaml -f contender-deployment.yaml -n test-2
+cd resources
+k create namespace test-2
+k apply -f 00_opstack_rollup_boost.yaml -f 02_op-rbuilder_tdx.yaml -f testing.yaml -n test-2
 ```
