@@ -6,14 +6,20 @@ echo "alias k='sudo /usr/local/bin/k3s kubectl'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-# Install Kata (deprecated)
-Use instruction from [here](https://github.com/kata-containers/kata-containers/blob/main/tools/packaging/kata-deploy/helm-chart/README.m) making sure to preliminary set [k8sDistribution: "k3s"](https://github.com/kata-containers/kata-containers/blob/main/tools/packaging/kata-deploy/helm-chart/kata-deploy/values.yaml#L7).
+# Install Kata
+Use instruction from [here](https://github.com/kata-containers/kata-containers/blob/main/tools/packaging/kata-deploy/helm-chart/README.md) making sure to preliminary set [k8sDistribution: "k3s"](https://github.com/kata-containers/kata-containers/blob/main/tools/packaging/kata-deploy/helm-chart/kata-deploy/values.yaml#L7).
+```bash
+cd kata-containers/tools/packaging/kata-deploy/helm-chart/kata-deploy
+sudo helm install kata-deploy . --kubeconfig /etc/rancher/k3s/k3s.yaml --namespace kube-system
+```
 
 # Install CC Operator
 Operator introduces `enclave-cc` class runtime to allow running a container using more lightweight libOS over kata VM.
 ```bash
 cd ~/
-git clone git@github.com:cbarbieru/operator.git
+git clone https://github.com/cbarbieru/operator.git
+k label node rosablanche-1 node.kubernetes.io/worker=
+k apply -k operator/config/release
 k apply -k operator/config/samples/ccruntime/default/
 k apply -k operator/config/samples/enclave-cc/hw/
 ``` 
