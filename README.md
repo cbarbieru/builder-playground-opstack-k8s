@@ -48,9 +48,10 @@ Restart k3s (containerd) with `sudo systemctl restart k3s`.
 cd ~/
 git clone https://github.com/cbarbieru/builder-playground-opstack-k8s.git
 cd builder-playground-opstack-k8s
-mkdir -p /mnt/sceal/storage
+sudo mkdir -p /mnt/sceal/storage
 sudo cp -a storage/. /mnt/sceal/storage/
 cd resources
 k create namespace test-2
 k apply -f 00_opstack_rollup_boost.yaml -f 02_op-rbuilder_tdx.yaml -f testing.yaml -n test-2
+k delete -f ...
 ```
